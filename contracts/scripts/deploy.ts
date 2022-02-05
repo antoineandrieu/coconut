@@ -1,25 +1,24 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
-import { ethers } from "hardhat";
+import { ethers } from 'hardhat';
 
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
+  const [deployer] = await ethers.getSigners();
 
-  // We get the contract to deploy
-  const Greeter = await ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  console.log('Deploying contracts with the account:', deployer.address);
+  console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  await greeter.deployed();
+  const Bounty = await ethers.getContractFactory('Bounty');
+  const bounty = await Bounty.deploy(
+    '0x25786B096CD3cCc982be85a3d970B0d054aD8F76',
+    1000,
+    { value: 1000 }
+  );
+  await bounty.deployed();
+  console.log('Bounty deployed to:', bounty.address);
 
-  console.log("Greeter deployed to:", greeter.address);
+  const BountyFactory = await ethers.getContractFactory('BountyFactory');
+  const bountyFactory = await BountyFactory.deploy(bounty.address);
+  await bountyFactory.deployed();
+  console.log('BountyFactory deployed to:', bounty.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
