@@ -8,7 +8,7 @@ describe('Bounty', () => {
     const mainBounty = await Bounty.deploy(
       '0x25786B096CD3cCc982be85a3d970B0d054aD8F76',
       1000,
-      { value: 666 }
+      { value: 1000 }
     );
     const provider = waffle.provider;
     const balance = await provider.getBalance(mainBounty.address);
