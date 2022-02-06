@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { ethers } from 'ethers';
 import styled from 'styled-components';
-import { useSessionContext } from '../contexts/SessionContext';
 import AnonymousIndex from '../components/AnonymousIndex';
 import Dashboard from '../components/Dashboard';
+import { useSessionContext } from '../contexts/SessionContext';
 
 const StyledIndex = styled.div`
   height: 100%;
@@ -15,9 +16,22 @@ const StyledIndex = styled.div`
 `;
 
 const Index: React.FC = () => {
-  const { account, userType } = useSessionContext();
+  const { setProvider, account, setAccount, userType } = useSessionContext();
 
-  return account ? (
+  useEffect(() => {
+    (async function () {
+      const provider = new ethers.providers.Web3Provider(
+        (window as any).ethereum,
+        'any'
+      );
+      setProvider(provider);
+      await provider.send('eth_requestAccounts', []);
+      const signer = provider.getSigner();
+      setAccount(await signer.getAddress());
+    })();
+  }, []);
+
+  return userType ? (
     <Dashboard account={account} userType={userType} />
   ) : (
     <StyledIndex>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 export type SessionContextType = {
+  provider: any;
+  setProvider: (provider: any) => void;
   userType: string;
   setUserType: (userType: string) => void;
   account: string;
@@ -8,6 +10,8 @@ export type SessionContextType = {
 };
 
 export const SessionContext = React.createContext<SessionContextType>({
+  provider: undefined,
+  setProvider: () => '',
   userType: '',
   setUserType: () => '',
   account: '',
@@ -25,10 +29,13 @@ function useSessionContext() {
 }
 
 function SessionContextProvider(props: React.PropsWithChildren<{}>) {
+  const [provider, setProvider] = useState(undefined);
   const [userType, setUserType] = useState('');
   const [account, setAccount] = useState('');
 
   const sessionValue = {
+    provider,
+    setProvider,
     userType,
     setUserType,
     account,

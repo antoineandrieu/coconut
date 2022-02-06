@@ -1,5 +1,4 @@
 import React from 'react';
-import { ethers } from 'ethers';
 import styled from 'styled-components';
 import Button from './Button';
 import { useSessionContext } from '../contexts/SessionContext';
@@ -22,17 +21,11 @@ const StyledLogin = styled.div`
 `;
 
 const Login: React.FC = () => {
-  const { setUserType, setAccount } = useSessionContext();
+  const { provider, setUserType, setAccount } = useSessionContext();
 
   const login = async (userType: 'hunter' | 'organization') => {
-    const provider = new ethers.providers.Web3Provider(
-      (window as any).ethereum,
-      'any'
-    );
-    // Prompt user for account connections
     await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner();
-    console.log('Account:', await signer.getAddress());
     setUserType(userType);
     setAccount(await signer.getAddress());
   };

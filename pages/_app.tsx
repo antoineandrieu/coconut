@@ -5,7 +5,7 @@ import { SessionContextProvider } from '../contexts/SessionContext';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionContextProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </SessionContextProvider>
   );
 }
