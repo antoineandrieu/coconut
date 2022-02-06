@@ -31,13 +31,13 @@ const StyledButton = styled.button`
   }
 `;
 
-interface Props {
+interface ButtonProps {
   onClick: () => void;
   text: string;
   color: string;
 }
 
-const Button: React.FC<Props> = ({ onClick, text, color }) => {
+const Button: React.FC<ButtonProps> = ({ onClick, text, color }) => {
   return (
     <StyledButton onClick={onClick} color={color}>
       {text}

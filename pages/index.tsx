@@ -1,32 +1,39 @@
 import type { NextPage } from 'next';
+import styled from 'styled-components';
 import Head from 'next/head';
 import Image from 'next/image';
-import styles from '../styles/Home.module.css';
-import Login from '../components/Login';
+import Index from '../components/Index';
+
+const Container = styled.div`
+  padding: 0 2rem;
+  height: 90vh;
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
-        <title>coconut </title>
+        <title>coconut 🥥</title>
         <meta name="description" content="Decentralized bounty platfotm" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>coconut 🥥</h1>
+      <Index />
 
-        <p className={styles.description}>Decentralized bounty platform</p>
-        <Login />
-      </main>
-
-      <footer className={styles.footer}>
+      <Footer>
         <a
           href="https://github.com/codingantoine/coconut"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span className={styles.logo}>
+          <span>
             <Image
               src="/github.svg"
               alt="Github Logo"
@@ -35,8 +42,8 @@ const Home: NextPage = () => {
             />
           </span>
         </a>
-      </footer>
-    </div>
+      </Footer>
+    </Container>
   );
 };
 
