@@ -5,26 +5,41 @@ const StyledBountyList = styled.div``;
 
 interface BountyListProps {
   bounties: any;
-  ipfsClient: any;
 }
-const BountyList = ({ bounties, ipfsClient }: BountyListProps) => {
+const BountyList = ({ bounties }: BountyListProps) => {
   const [bountiesData, setBountiesData] = React.useState<any[]>([]);
 
   useEffect(() => {
-    let cleanedBounties: any[] = [];
-    bounties.map((bounty: any) => {
-      const data = ipfsClient.get(bounty);
-      cleanedBounties.push(data);
-    });
-    console.log(cleanedBounties);
-    setBountiesData(cleanedBounties);
+    (async function () {
+      try {
+        const bountiesFromIfps = await Promise.all(
+          bounties.map(async (cid: any) => {
+            const res = await fetch(`/api/ipfs/${cid}`);
+            const bounty = await res.json();
+            console.log(bounty);
+            return bounty;
+          })
+        );
+        console.log(bountiesFromIfps);
+        setBountiesData(bountiesFromIfps);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
 
   return (
     <StyledBountyList>
-      {bountiesData.map((bounty: any) => (
-        <div key={bounty}>{bounty}</div>
-      ))}
+      <h1>Bounty List</h1>
+      <ul>
+        {bountiesData.map((bounty, index) => (
+          <li key={index}>
+            <h2>{bounty.title}</h2>
+            <p>{bounty.description}</p>
+            <p>{bounty.award}</p>
+          </li>
+        ))}
+      </ul>
     </StyledBountyList>
   );
 };
