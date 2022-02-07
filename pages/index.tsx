@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   return (
     <Container>
       <Head>
-        <title>coconut 🥥</title>
+        <title>coconut</title>
         <meta name="description" content="Decentralized bounty platfotm" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
