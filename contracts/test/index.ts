@@ -1,6 +1,4 @@
-import { expect } from 'chai';
 import { ethers, waffle } from 'hardhat';
-import { BigNumber } from '@ethersproject/bignumber';
 
 describe('Bounty', () => {
   it('Should create a bounty', async function () {

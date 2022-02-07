@@ -9,14 +9,15 @@ async function main() {
   const Bounty = await ethers.getContractFactory('Bounty');
   const bounty = await Bounty.deploy(
     '0x25786B096CD3cCc982be85a3d970B0d054aD8F76',
-    1000,
-    { value: 1000 }
+    ''
   );
   await bounty.deployed();
   console.log('Bounty deployed to:', bounty.address);
 
   const BountyFactory = await ethers.getContractFactory('BountyFactory');
-  const bountyFactory = await BountyFactory.deploy(bounty.address);
+  const bountyFactory = await BountyFactory.deploy(bounty.address, {
+    value: 1000,
+  });
   await bountyFactory.deployed();
   console.log('BountyFactory deployed to:', bountyFactory.address);
 }

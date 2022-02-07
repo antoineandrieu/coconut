@@ -7,7 +7,7 @@ import './Bounty.sol';
 
 contract BountyFactory {
     address mainContract;
-    mapping(address => Bounty[]) OrganizationBounties;
+    mapping(address => string[]) OrganizationBounties;
     Bounty[] public bounties;
 
     constructor(address _mainContract) {
@@ -20,19 +20,19 @@ contract BountyFactory {
     ) external payable {
         Bounty child = Bounty(Clones.clone(mainContract));
         child.init{value: msg.value}(_organization_address, _ipfs_cid);
-        OrganizationBounties[_organization_address].push(child);
+        OrganizationBounties[_organization_address].push(_ipfs_cid);
         bounties.push(child);
     }
 
     function getBountiesFromOrganization(address organization_address)
-        public
+        external
         view
-        returns (Bounty[] memory)
+        returns (string[] memory)
     {
         return OrganizationBounties[organization_address];
     }
 
-    function getBounties() public view returns (Bounty[] memory) {
+    function getBounties() external view returns (Bounty[] memory) {
         return bounties;
     }
 }
