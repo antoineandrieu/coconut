@@ -15,9 +15,7 @@ async function main() {
   console.log('Bounty deployed to:', bounty.address);
 
   const BountyFactory = await ethers.getContractFactory('BountyFactory');
-  const bountyFactory = await BountyFactory.deploy(bounty.address, {
-    value: 1000,
-  });
+  const bountyFactory = await BountyFactory.deploy(bounty.address);
   await bountyFactory.deployed();
   console.log('BountyFactory deployed to:', bountyFactory.address);
 }
