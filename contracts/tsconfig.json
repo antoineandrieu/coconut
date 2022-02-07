@@ -8,6 +8,5 @@
     "declaration": true
   },
   "include": ["./scripts", "./test", "./typechain"],
-  "exclude": ["./contracts"],
   "files": ["./hardhat.config.ts"]
 }
