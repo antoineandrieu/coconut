@@ -32,5 +32,12 @@ describe('Bounty', () => {
     console.log(bounty);
     const children = await bountyFactory.getBounties();
     console.log(children);
+
+    const BountySubmission = await ethers.getContractFactory(
+      'BountySubmission'
+    );
+    console.log(children);
+    const bountySubmission = await BountySubmission.deploy(children[0]);
+    bountySubmission.validateSubmission();
   });
 });

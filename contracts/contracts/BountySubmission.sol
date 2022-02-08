@@ -17,6 +17,8 @@ contract BountySubmission {
 
     function validateSubmission() external {
         Bounty bountyContract = Bounty(bounty);
+        uint256 balance = bountyContract.balanceOf(bounty);
+        bountyContract.approve(hunter_address, balance);
         bountyContract.setStatus('resolved');
     }
 
