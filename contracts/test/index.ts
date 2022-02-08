@@ -3,10 +3,7 @@ import { ethers, waffle } from 'hardhat';
 describe('Bounty', () => {
   it('Should create a bounty', async function () {
     const Bounty = await ethers.getContractFactory('Bounty');
-    const mainBounty = await Bounty.deploy(
-      '0x25786B096CD3cCc982be85a3d970B0d054aD8F76',
-      'Qme7ss3ARVgxv6rXqVPiikMJ8u2NLgmgszg13pYrDKEoiu'
-    );
+    const mainBounty = await Bounty.deploy();
     const provider = waffle.provider;
 
     const BountyFactory = await ethers.getContractFactory('BountyFactory');
