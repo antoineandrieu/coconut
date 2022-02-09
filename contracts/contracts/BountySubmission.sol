@@ -13,6 +13,7 @@ contract BountySubmission {
 
     constructor(address _bounty) {
         bounty = _bounty;
+        hunter_address = msg.sender;
     }
 
     function validateSubmission() external {

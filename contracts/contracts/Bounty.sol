@@ -23,4 +23,8 @@ contract Bounty is ERC20 {
     function setStatus(string memory _status) external {
         status = _status;
     }
+
+    function getStatus() public view returns (string memory) {
+        return status;
+    }
 }

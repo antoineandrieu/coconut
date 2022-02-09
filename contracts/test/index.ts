@@ -51,21 +51,37 @@ describe('Bounty', () => {
 
   it('Should create a bounty submission', async () => {
     const orgaWallet = ethers.Wallet.createRandom().connect(provider);
+    // const balance = ethers.utils.hexlify(100000000000000000);
+    await provider.send('hardhat_setBalance', [
+      orgaWallet.address,
+      '0x16345785D8A0000',
+    ]);
     await bountyFactory.createBounty(
       orgaWallet.address,
       'Qmcg2geJ2eCSMEBBSbP8Z56AZgg6mnfTHo56t4SBC74873',
       { value: ethers.utils.parseEther('0.02') }
     );
-    const BountySubmission = await ethers.getContractFactory(
-      'BountySubmission'
-    );
     const bounties = await bountyFactory.getBountiesFromOrganization(
       orgaWallet.address
     );
-    console.log(bounties);
+    const hunterWallet = ethers.Wallet.createRandom().connect(provider);
+    const BountySubmission = await ethers.getContractFactory(
+      'BountySubmission'
+    );
     const bountySubmission = await BountySubmission.deploy(
       bounties[0].bounty_address
     );
-    bountySubmission.validateSubmission();
+    // const bountySubmissionWithSigner = bountySubmission.connect(orgaWallet);
+    await bountySubmission.validateSubmission();
+    const signer = provider.getSigner(0);
+    const bounty = await ethers.getContractAt(
+      'Bounty',
+      bounties[0].bounty_address,
+      signer
+    );
+    const status = await bounty.getStatus();
+    expect(status).to.equal('resolved');
+    // const balance = await provider.getBalance(hunterWallet.address);
+    // console.log(balance);
   });
 });
